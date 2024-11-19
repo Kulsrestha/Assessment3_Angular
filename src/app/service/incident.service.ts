@@ -3,17 +3,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// interface Incident {
-//   id?: string;
-//   title: string;
-//   description: string;
-//   status: string;
-//   createdAt: Date;
-//   assignedTo?: {
-//     userId: string;
-//     username: string;
-//   };
-// }
 
 
 @Injectable({

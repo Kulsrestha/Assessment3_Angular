@@ -11,14 +11,6 @@
       <p class="card-text text-muted">{{ incident.description }}</p>
       <p><strong>Assigned To:</strong> <span class="badge bg-primary">{{ incident.assignedTo }}</span></p>
       <p><strong>Status:</strong> <span class="badge bg-warning text-dark">{{ incident.status }}</span></p>
-
-      <div *ngIf="incident.comments && incident.comments.length" class="mt-3">
-        <h4>Comments:</h4>
-        <div *ngFor="let comment of incident.comments" class="bg-light p-2 mb-2 rounded border border-secondary">
-          <p><strong>{{ comment.userId }}:</strong> {{ comment.comment }}</p>
-        </div>
-      </div>
-
       <div *ngIf="incident.status === 'Closed'" class="mt-3">
         <button (click)="deleteIncident(incident.id)" class="btn btn-danger">Delete</button>
       </div>
