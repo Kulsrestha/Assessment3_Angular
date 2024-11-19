@@ -1,0 +1,36 @@
+<div class="user-dashboard">
+    <h2>Your Assigned Incidents</h2>
+    
+    <!-- Logout Button -->
+    <button class="btn btn-danger" (click)="logout()">Logout</button>
+  
+    <div *ngFor="let incident of incidents" class="incident-card card shadow-sm mb-4">
+      <div class="card-body">
+        <h3>{{ incident.title }}</h3> 
+        <p>{{ incident.description }}</p> 
+        <p><strong>Assigned To:</strong> {{ incident.assignedTo }}</p> 
+  
+        <!-- Status Buttons (Visible only for the current user) -->
+        <div *ngIf="incident.assignedTo === currentUserId">
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" 
+                    [disabled]="incident.status === 'Open'" 
+                    (click)="updateStatus(incident.id, 'Open')">
+              Open
+            </button>
+            <button class="btn btn-warning" 
+                    [disabled]="incident.status === 'In Progress'" 
+                    (click)="updateStatus(incident.id, 'In Progress')">
+              In Progress
+            </button>
+            <button class="btn btn-success" 
+                    [disabled]="incident.status === 'Closed'" 
+                    (click)="updateStatus(incident.id, 'Closed')">
+              Closed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
