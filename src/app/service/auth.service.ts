@@ -12,8 +12,8 @@ export class AuthService {
   constructor(
     private fireauth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   // Admin credentials (hardcoded)
   private readonly adminEmail = 'admin@example.com';
@@ -21,14 +21,12 @@ export class AuthService {
 
   // Login method
   login(email: string, password: string) {
-
     if (email === this.adminEmail && password === this.adminPassword) {
       // Admin login
       localStorage.setItem('isAdmin', 'true');
       localStorage.setItem('isAuthenticated', 'true');
       this.router.navigate(['/admin-dashboard']);
     } else {
-
       this.fireauth
         .signInWithEmailAndPassword(email, password)
         .then((res) => {
@@ -46,8 +44,6 @@ export class AuthService {
         });
     }
   }
-
-
 
   register(email: string, password: string, username: string) {
     this.fireauth
@@ -70,7 +66,6 @@ export class AuthService {
       });
   }
 
-
   sendVerificationEmail(user: any) {
     user
       .sendEmailVerification()
@@ -84,16 +79,13 @@ export class AuthService {
       });
   }
 
-
   getCurrentUser(): Observable<any> {
     return this.fireauth.authState;
   }
 
-
   isAdmin(): boolean {
     return localStorage.getItem('isAdmin') === 'true';
   }
-
 
   logout() {
     this.fireauth.signOut().then(
@@ -104,10 +96,9 @@ export class AuthService {
       },
       (err) => {
         alert(err.message);
-      }
+      },
     );
   }
-
 
   googleSignIn() {
     return this.fireauth

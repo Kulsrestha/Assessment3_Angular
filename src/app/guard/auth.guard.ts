@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     const isAdmin = localStorage.getItem('isAdmin') === 'true';
-    const isAdminRoute = state.url.includes('admin-dashboard'); 
+    const isAdminRoute = state.url.includes('admin-dashboard');
 
     if (!isAuthenticated) {
       // If not authenticated, redirect to login

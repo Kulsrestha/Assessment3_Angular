@@ -9,23 +9,23 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-assign-incident',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './assign-incident.component.html',
-  styleUrl: './assign-incident.component.css'
+  styleUrl: './assign-incident.component.css',
 })
 export class AssignIncidentComponent implements OnInit {
-  incidentId: string = '';
-  incidentTitle: string = '';
-  incidentDescription: string = '';
-  incidentStatus: string = '';
-  users: any[] = []; 
-  selectedUser: string = ''; 
+  incidentId = '';
+  incidentTitle = '';
+  incidentDescription = '';
+  incidentStatus = '';
+  users: any[] = [];
+  selectedUser = '';
 
   constructor(
     private incidentService: IncidentService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   loadIncident(): void {
@@ -33,16 +33,16 @@ export class AssignIncidentComponent implements OnInit {
       this.incidentTitle = incident.title;
       this.incidentDescription = incident.description;
       this.incidentStatus = incident.status;
-      this.selectedUser = incident.assignedTo || ''; 
+      this.selectedUser = incident.assignedTo || '';
     });
   }
 
   loadUsers(): void {
-    console.log('Loading users...'); 
+    console.log('Loading users...');
     this.userService.getUsers().subscribe((users) => {
-      console.log('Fetched users:', users); 
+      console.log('Fetched users:', users);
       if (users && users.length > 0) {
-        this.users = users; 
+        this.users = users;
       } else {
         console.error('No users available.');
       }
@@ -58,10 +58,11 @@ export class AssignIncidentComponent implements OnInit {
         assignedTo: this.selectedUser,
       };
 
-      this.incidentService.updateIncident(this.incidentId, updatedIncident)
+      this.incidentService
+        .updateIncident(this.incidentId, updatedIncident)
         .then(() => {
           alert('Incident successfully assigned!');
-          this.router.navigate(['/create-incident']); 
+          this.router.navigate(['/create-incident']);
         })
         .catch((error: any) => {
           console.error('Error assigning incident:', error);
@@ -73,10 +74,10 @@ export class AssignIncidentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.incidentId = params.get('id') || ''; 
+      this.incidentId = params.get('id') || '';
       if (this.incidentId) {
-        this.loadIncident(); 
-        this.loadUsers(); 
+        this.loadIncident();
+        this.loadUsers();
       }
     });
   }

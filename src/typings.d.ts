@@ -1,9 +1,8 @@
 // typings.d.ts
 declare global {
-    interface Window {
-      recaptchaVerifier: firebase.auth.RecaptchaVerifier;
-    }
+  interface Window {
+    recaptchaVerifier: firebase.auth.RecaptchaVerifier;
   }
-  
-  export {}; // This is required to make the file a module
-  
+}
+
+export {}; // This is required to make the file a module

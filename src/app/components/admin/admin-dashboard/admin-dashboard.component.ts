@@ -4,19 +4,19 @@ import { IncidentService } from '../../../service/incident.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [NavbarComponent,CommonModule],
+  imports: [NavbarComponent, CommonModule],
   templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css'
+  styleUrl: './admin-dashboard.component.css',
 })
 export class AdminDashboardComponent implements OnInit {
   incidents: any[] = [];
 
   constructor(
-    private incidentService: IncidentService,private router:Router
+    private incidentService: IncidentService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -34,11 +34,14 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   deleteIncident(incidentId: string): void {
-    this.incidentService.deleteIncident(incidentId).then(() => {
-      console.log(`Incident ${incidentId} deleted successfully`);
-      this.loadAllIncidents(); 
-    }).catch(error => {
-      console.error('Error deleting incident:', error);
-    });
+    this.incidentService
+      .deleteIncident(incidentId)
+      .then(() => {
+        console.log(`Incident ${incidentId} deleted successfully`);
+        this.loadAllIncidents();
+      })
+      .catch((error) => {
+        console.error('Error deleting incident:', error);
+      });
   }
 }

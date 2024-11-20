@@ -6,14 +6,14 @@ import { AuthService } from '../../../service/auth.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule,FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  email: string = '';
-  password: string = '';
-  username: string = '';
+  email = '';
+  password = '';
+  username = '';
 
   constructor(private auth: AuthService) {}
 
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.auth.register(this.email, this.password, this.username); 
+    this.auth.register(this.email, this.password, this.username);
     this.email = '';
     this.password = '';
     this.username = '';
