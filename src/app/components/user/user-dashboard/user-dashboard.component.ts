@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../service/auth.service';
@@ -31,8 +32,6 @@ export class UserDashboardComponent implements OnInit {
   }
   logout(): void {
     localStorage.clear();
-
-    // Redirect to login page
     this.router.navigate(['/login']);
   }
   loadUserIncidents(): void {

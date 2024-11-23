@@ -1,31 +1,76 @@
 <div class="create-incident-form container mt-4">
-    <h2 class="text-primary">Create New Incident</h2>
-  
-    <form (ngSubmit)="onSubmit()" class="form-group">
-      <div class="mb-3">
-        <label for="incidentTitle" class="form-label">Title:</label>
-        <input id="incidentTitle" type="text" [(ngModel)]="incidentTitle" name="title" required class="form-control" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="incidentDescription" class="form-label">Description:</label>
-        <textarea id="incidentDescription" [(ngModel)]="incidentDescription" name="description" required class="form-control"></textarea>
-      </div>
-  
-      <button type="submit" class="btn btn-success">Create Incident</button>
-    </form>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-primary mb-0">Create New Incident</h2>
+    <button (click)="goToDashboard()" class="btn btn-primary ms-3">Visit Dashboard</button>
   </div>
-  
-  <div class="incident-list container mt-4">
-    <h3 class="text-primary">All Incidents</h3>
-    <div *ngFor="let incident of incidents" class="card mb-4 shadow-sm">
-      <div class="card-body">
-        <h4 class="card-title text-success">{{ incident.title }}</h4>
-        <p class="card-text text-muted">{{ incident.description }}</p>
-        <p><strong>Status:</strong> <span class="badge bg-warning text-dark">{{ incident.status }}</span></p>
-        <p><strong>Assigned to:</strong> <span class="badge bg-info">{{ incident.assignedTo || 'Unassigned' }}</span></p>
-        <button (click)="onIncidentClick(incident.id)" class="btn btn-primary mt-3">Assign/Update</button>
+
+  <form #incidentForm="ngForm" (ngSubmit)="onSubmit(incidentForm)" class="form-group">
+    <div class="mb-3">
+      <label for="incidentTitle" class="form-label">Title:</label>
+      <input
+        id="incidentTitle"
+        type="text"
+        [(ngModel)]="incidentTitle"
+        name="title"
+        required
+        class="form-control"
+        #titleInput="ngModel"
+      />
+      <div
+        *ngIf="titleInput.invalid && (titleInput.dirty || titleInput.touched)"
+        class="text-danger mt-1"
+      >
+        Incident title is required.
       </div>
     </div>
+
+    <!-- Description Input -->
+    <div class="mb-3">
+      <label for="incidentDescription" class="form-label">Description:</label>
+      <textarea
+        id="incidentDescription"
+        [(ngModel)]="incidentDescription"
+        name="description"
+        required
+        class="form-control"
+        #descriptionInput="ngModel"
+      ></textarea>
+      <div
+        *ngIf="descriptionInput.invalid && (descriptionInput.dirty || descriptionInput.touched)"
+        class="text-danger mt-1"
+      >
+        Incident description is required.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!titleInput.valid || !descriptionInput.valid"
+    >
+      Create Incident
+    </button>
+  </form>
+</div>
+
+<!-- Incident List Section -->
+<div class="incident-list container mt-4">
+  <h3 class="text-primary">All Incidents</h3>
+  <div *ngFor="let incident of incidents" class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h4 class="card-title text-success">{{ incident.title }}</h4>
+      <p class="card-text text-muted">{{ incident.description }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span class="badge bg-warning text-dark">{{ incident.status }}</span>
+      </p>
+      <p>
+        <strong>Assigned to:</strong>
+        <span class="badge bg-info">{{ incident.assignedTo || 'Unassigned' }}</span>
+      </p>
+      <button (click)="onIncidentClick(incident.id)" class="btn btn-primary mt-3">
+        Assign/Update
+      </button>
+    </div>
   </div>
-  
+</div>

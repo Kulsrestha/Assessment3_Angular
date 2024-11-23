@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -10,29 +10,14 @@ import { AuthService } from '../../../service/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   email = '';
   password = '';
   username = '';
 
   constructor(private auth: AuthService) {}
 
-  ngOnInit(): void {}
-
   register() {
-    if (this.email === '') {
-      alert('Please enter email');
-      return;
-    }
-    if (this.password === '') {
-      alert('Please enter password');
-      return;
-    }
-    if (this.username === '') {
-      alert('Please enter a username');
-      return;
-    }
-
     this.auth.register(this.email, this.password, this.username);
     this.email = '';
     this.password = '';

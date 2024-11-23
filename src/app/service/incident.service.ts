@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
@@ -34,7 +35,6 @@ export class IncidentService {
               description: string;
               assignedTo: string;
               status: string;
-              comments: any[];
             };
             const id = a.payload.doc.id;
             return { id, ...data };

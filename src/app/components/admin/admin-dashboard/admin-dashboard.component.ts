@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { IncidentService } from '../../../service/incident.service';
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './admin-dashboard.component.css',
 })
 export class AdminDashboardComponent implements OnInit {
-  incidents: any[] = [];
+  incidents: any = [];
 
   constructor(
     private incidentService: IncidentService,
@@ -27,10 +28,6 @@ export class AdminDashboardComponent implements OnInit {
     this.incidentService.getAllIncidents().subscribe((incidents) => {
       this.incidents = incidents;
     });
-  }
-  logout(): void {
-    localStorage.clear();
-    this.router.navigate(['/login']);
   }
 
   deleteIncident(incidentId: string): void {

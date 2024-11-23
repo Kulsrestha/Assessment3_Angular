@@ -10,19 +10,28 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     const isAdmin = localStorage.getItem('isAdmin') === 'true';
-    const isAdminRoute = state.url.includes('admin-dashboard');
 
     if (!isAuthenticated) {
-      // If not authenticated, redirect to login
       this.router.navigate(['/login']);
       return false;
     }
+
+    const adminRoutes = ['/admin-dashboard', '/create-incident', '/assign-incident'];
+    const userRoutes = ['/user-dashboard'];
+
+    const isAdminRoute = adminRoutes.some((path) => state.url.startsWith(path));
+    const isUserRoute = userRoutes.some((path) => state.url.startsWith(path));
 
     if (isAdminRoute && !isAdmin) {
       this.router.navigate(['/user-dashboard']);
       return false;
     }
 
-    return true; // Access granted
+    if (isUserRoute && isAdmin) {
+      this.router.navigate(['/admin-dashboard']);
+      return false;
+    }
+
+    return true;
   }
 }

@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IncidentService } from '../../../service/incident.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-create-incident',
@@ -21,8 +21,11 @@ export class CreateIncidentComponent implements OnInit {
     private incidentService: IncidentService,
     private router: Router,
   ) {}
+  ngOnInit(): void {
+    this.loadIncidents();
+  }
 
-  onSubmit(): void {
+  onSubmit(incidentForm: any): void {
     const incidentData = {
       title: this.incidentTitle,
       description: this.incidentDescription,
@@ -37,6 +40,7 @@ export class CreateIncidentComponent implements OnInit {
         alert('Incident created successfully!');
         this.incidentTitle = '';
         this.incidentDescription = '';
+        incidentForm.resetForm();
         this.loadIncidents();
       })
       .catch((error) => {
@@ -54,7 +58,7 @@ export class CreateIncidentComponent implements OnInit {
     this.router.navigate(['/assign-incident', incidentId]);
   }
 
-  ngOnInit(): void {
-    this.loadIncidents();
+  goToDashboard() {
+    this.router.navigate(['/admin-dashboard']);
   }
 }

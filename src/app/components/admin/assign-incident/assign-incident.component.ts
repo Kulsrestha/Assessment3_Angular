@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IncidentService } from '../../../service/incident.service';
 import { UserService } from '../../../service/user.service';
@@ -27,6 +27,16 @@ export class AssignIncidentComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.incidentId = params.get('id') || '';
+      if (this.incidentId) {
+        this.loadIncident();
+        this.loadUsers();
+      }
+    });
+  }
 
   loadIncident(): void {
     this.incidentService.getIncidentById(this.incidentId).subscribe((incident) => {
@@ -70,15 +80,5 @@ export class AssignIncidentComponent implements OnInit {
     } else {
       alert('Please select a user to assign the incident.');
     }
-  }
-
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.incidentId = params.get('id') || '';
-      if (this.incidentId) {
-        this.loadIncident();
-        this.loadUsers();
-      }
-    });
   }
 }
