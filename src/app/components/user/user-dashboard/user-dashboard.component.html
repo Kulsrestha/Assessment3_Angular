@@ -1,33 +1,41 @@
 <div class="user-dashboard container my-5">
-
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="text-primary">Your Assigned Incidents</h2>
 
     <button class="btn btn-danger" (click)="logout()">Logout</button>
   </div>
-
-
-  <div class="row g-4">
+  <div *ngIf="incidents.length === 0" class="alert alert-info text-center">
+    No incidents assigned yet.
+  </div>
+  <div *ngIf="incidents.length > 0" class="row g-4">
     <div *ngFor="let incident of incidents" class="col-md-6 col-lg-4">
       <div class="incident-card card shadow-sm">
         <div class="card-body">
-
           <h3 class="card-title text-truncate">{{ incident.title }}</h3>
-          <!-- Incident Description -->
+
           <p class="card-text text-muted">{{ incident.description }}</p>
 
           <div *ngIf="incident.assignedTo === currentUserId">
             <div class="d-flex gap-2 justify-content-center mt-3">
-              <button class="btn btn-outline-primary w-100" [disabled]="incident.status === 'Open'"
-                (click)="updateStatus(incident.id, 'Open')">
+              <button
+                class="btn btn-outline-primary w-100"
+                [disabled]="incident.status === 'Open'"
+                (click)="updateStatus(incident.id, 'Open')"
+              >
                 Open
               </button>
-              <button class="btn btn-outline-warning w-100" [disabled]="incident.status === 'In Progress'"
-                (click)="updateStatus(incident.id, 'In Progress')">
+              <button
+                class="btn btn-outline-warning w-100"
+                [disabled]="incident.status === 'In Progress'"
+                (click)="updateStatus(incident.id, 'In Progress')"
+              >
                 In Progress
               </button>
-              <button class="btn btn-outline-success w-100" [disabled]="incident.status === 'Closed'"
-                (click)="updateStatus(incident.id, 'Closed')">
+              <button
+                class="btn btn-outline-success w-100"
+                [disabled]="incident.status === 'Closed'"
+                (click)="updateStatus(incident.id, 'Closed')"
+              >
                 Closed
               </button>
             </div>
@@ -37,3 +45,4 @@
     </div>
   </div>
 </div>
+<ul></ul>

@@ -1,35 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IncidentService } from '../../../service/incident.service';
 import { Router } from '@angular/router';
-import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-create-incident',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './create-incident.component.html',
-  styleUrl: './create-incident.component.css'
+  styleUrl: './create-incident.component.css',
 })
-export class CreateIncidentComponent {
-  incidentTitle: string = ''; 
-  incidentDescription: string = '';
-  incidents: any[] = []; 
+export class CreateIncidentComponent implements OnInit {
+  incidentTitle = '';
+  incidentDescription = '';
+  incidents: any[] = [];
 
   constructor(
     private incidentService: IncidentService,
-    private router: Router
+    private router: Router,
   ) {}
+  ngOnInit(): void {
+    this.loadIncidents();
+  }
 
- 
-  onSubmit(): void {
+  onSubmit(incidentForm: any): void {
     const incidentData = {
       title: this.incidentTitle,
       description: this.incidentDescription,
       status: 'Open',
       createdAt: new Date(),
-      assignedTo: null, 
+      assignedTo: null,
     };
 
     this.incidentService
@@ -38,6 +40,7 @@ export class CreateIncidentComponent {
         alert('Incident created successfully!');
         this.incidentTitle = '';
         this.incidentDescription = '';
+        incidentForm.resetForm();
         this.loadIncidents();
       })
       .catch((error) => {
@@ -45,20 +48,17 @@ export class CreateIncidentComponent {
       });
   }
 
-
   loadIncidents(): void {
     this.incidentService.getAllIncidents().subscribe((incidents) => {
       this.incidents = incidents;
     });
   }
 
-
   onIncidentClick(incidentId: string): void {
     this.router.navigate(['/assign-incident', incidentId]);
   }
 
-
-  ngOnInit(): void {
-    this.loadIncidents();
+  goToDashboard() {
+    this.router.navigate(['/admin-dashboard']);
   }
 }

@@ -1,26 +1,30 @@
 <div class="assign-incident-form container mt-4">
-    <h2 class="text-primary">Assign Incident: {{ incidentTitle }}</h2>
-  
-    <form (ngSubmit)="onAssignIncident()" class="form-group">
-      <div class="mb-3">
-        <label for="incidentTitle" class="form-label">Title:</label>
-        <input id="incidentTitle" type="text" [value]="incidentTitle" readonly class="form-control" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="incidentDescription" class="form-label">Description:</label>
-        <textarea id="incidentDescription" [value]="incidentDescription" readonly class="form-control"></textarea>
-      </div>
-  
-      <div class="mb-3">
-        <label for="assignedUser" class="form-label">Assign User:</label>
-        <select id="assignedUser" [(ngModel)]="selectedUser" name="assignedUser" class="form-select">
-          <option value="">-- Select a User --</option>
-          <option *ngFor="let user of users" [value]="user.id">{{ user.username }}</option>
-        </select>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Assign Incident</button>
-    </form>
-  </div>
-  
+  <h2 class="text-primary">Assign Incident: {{ incidentTitle }}</h2>
+
+  <form (ngSubmit)="onAssignIncident()" class="form-group">
+    <div class="mb-3">
+      <label for="incidentTitle" class="form-label">Title:</label>
+      <input id="incidentTitle" type="text" [value]="incidentTitle" readonly class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="incidentDescription" class="form-label">Description:</label>
+      <textarea
+        id="incidentDescription"
+        [value]="incidentDescription"
+        readonly
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="assignedUser" class="form-label">Assign User:</label>
+      <select id="assignedUser" [(ngModel)]="selectedUser" name="assignedUser" class="form-select">
+        <option value="">-- Select a User --</option>
+        <option *ngFor="let user of users" [value]="user.id">{{ user.username }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Assign Incident</button>
+  </form>
+</div>

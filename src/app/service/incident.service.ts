@@ -1,29 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class IncidentService {
-
-  constructor(private firestore: AngularFirestore) { }
-
+  constructor(private firestore: AngularFirestore) {}
 
   createIncident(incidentData: any): Promise<string> {
-    return this.firestore.collection('incidents').add(incidentData)
-      .then(docRef => {
+    return this.firestore
+      .collection('incidents')
+      .add(incidentData)
+      .then((docRef) => {
         return docRef.id;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error adding incident:', error);
         throw error;
       });
   }
-
 
   getAllIncidents(): Observable<any[]> {
     return this.firestore
@@ -37,30 +35,28 @@ export class IncidentService {
               description: string;
               assignedTo: string;
               status: string;
-              comments: any[];
             };
             const id = a.payload.doc.id;
             return { id, ...data };
-          })
-        )
+          }),
+        ),
       );
   }
-
-
 
   getIncidentById(incidentId: string): Observable<any> {
     return this.firestore.collection('incidents').doc(incidentId).valueChanges();
   }
 
-
   assignIncidentToUser(incidentId: string, userId: string, assignedUser: string): Promise<void> {
-
-    return this.firestore.collection('incidents').doc(incidentId).update({
-      assignedTo: {
-        userId: userId,
-        username: assignedUser,
-      },
-    })
+    return this.firestore
+      .collection('incidents')
+      .doc(incidentId)
+      .update({
+        assignedTo: {
+          userId: userId,
+          username: assignedUser,
+        },
+      })
       .then(() => {
         console.log(`Incident ${incidentId} assigned to ${assignedUser}`);
       })
@@ -71,18 +67,24 @@ export class IncidentService {
   }
 
   isIncidentAssigned(incidentId: string): Observable<string | null> {
-    return this.firestore.collection('incidents').doc(incidentId).valueChanges().pipe(
-      map((incident) => {
-        const typedIncident = incident as { assignedTo?: { username: string } };
-        return typedIncident?.assignedTo?.username || null;
-      })
-    );
+    return this.firestore
+      .collection('incidents')
+      .doc(incidentId)
+      .valueChanges()
+      .pipe(
+        map((incident) => {
+          const typedIncident = incident as { assignedTo?: { username: string } };
+          return typedIncident?.assignedTo?.username || null;
+        }),
+      );
   }
 
-
   updateIncident(incidentId: string, updatedData: any): Promise<void> {
-    return this.firestore.collection('incidents').doc(incidentId).update(updatedData)
-      .catch(error => {
+    return this.firestore
+      .collection('incidents')
+      .doc(incidentId)
+      .update(updatedData)
+      .catch((error) => {
         console.error('Error updating incident:', error);
         throw error;
       });
@@ -103,23 +105,16 @@ export class IncidentService {
             };
             const id = a.payload.doc.id;
             return { id, ...data };
-          })
-        )
+          }),
+        ),
       );
   }
 
-
   updateIncidentStatus(incidentId: string, status: string): Promise<void> {
-    return this.firestore
-      .collection('incidents')
-      .doc(incidentId)
-      .update({ status: status });
+    return this.firestore.collection('incidents').doc(incidentId).update({ status: status });
   }
 
   deleteIncident(incidentId: string): Promise<void> {
-    return this.firestore
-      .collection('incidents')
-      .doc(incidentId)
-      .delete();
+    return this.firestore.collection('incidents').doc(incidentId).delete();
   }
 }

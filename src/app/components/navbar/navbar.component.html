@@ -1,12 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <a class="navbar-brand" href="#">Admin Dashboard</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" routerLink="/admin-dashboard">Admin Dashboard</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/create-incident" routerLinkActive="active">Create Incident</a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/create-incident">Create Incident</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login" (click)="logout()">Logout</a>
       </li>
     </ul>
   </div>
