@@ -66,7 +66,7 @@
       </p>
       <p>
         <strong>Assigned to:</strong>
-        <span class="badge bg-info">{{ incident.assignedTo || 'Unassigned' }}</span>
+        <span class="badge bg-info">{{ getUsername(incident.assignedTo) || 'Unassigned' }}</span>
       </p>
       <button (click)="onIncidentClick(incident.id)" class="btn btn-primary mt-3">
         Assign/Update

@@ -9,7 +9,7 @@
       <p class="card-text text-muted">{{ incident.description }}</p>
       <p>
         <strong>Assigned To:</strong>
-        <span class="badge bg-primary">{{ incident.assignedTo || 'Unassigned' }}</span>
+        <span class="badge bg-primary">{{ getUsername(incident.assignedTo) || 'Unassigned' }}</span>
       </p>
       <p>
         <strong>Status:</strong>

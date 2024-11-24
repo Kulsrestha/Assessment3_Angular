@@ -44,7 +44,7 @@ export class UserDashboardComponent implements OnInit {
     this.incidentService
       .updateIncidentStatus(incidentId, status)
       .then(() => {
-        console.log(`Incident ${incidentId} status updated to ${status}`);
+        // console.log(`Incident ${incidentId} status updated to ${status}`);
         this.loadUserIncidents();
       })
       .catch((error) => {

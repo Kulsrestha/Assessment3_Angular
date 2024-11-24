@@ -4,6 +4,7 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { IncidentService } from '../../../service/incident.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,14 +15,27 @@ import { Router } from '@angular/router';
 })
 export class AdminDashboardComponent implements OnInit {
   incidents: any = [];
-
+  users: any[] = [];
   constructor(
     private incidentService: IncidentService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.loadAllIncidents();
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.userService.getUsers().subscribe((users) => {
+      this.users = users;
+    });
+  }
+
+  getUsername(userId: string): string {
+    const user = this.users.find((user) => user.id == userId);
+    return user ? user.username : 'Unassigned';
   }
 
   loadAllIncidents(): void {
