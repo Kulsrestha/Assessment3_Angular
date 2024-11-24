@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IncidentService } from '../../../service/incident.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-create-incident',
@@ -16,13 +17,34 @@ export class CreateIncidentComponent implements OnInit {
   incidentTitle = '';
   incidentDescription = '';
   incidents: any[] = [];
+  users: any[] = [];
 
   constructor(
     private incidentService: IncidentService,
+    private userService: UserService,
     private router: Router,
   ) {}
+
   ngOnInit(): void {
     this.loadIncidents();
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.userService.getUsers().subscribe((users) => {
+      this.users = users;
+    });
+  }
+
+  loadIncidents(): void {
+    this.incidentService.getAllIncidents().subscribe((incidents) => {
+      this.incidents = incidents;
+    });
+  }
+
+  getUsername(userId: string): string {
+    const user = this.users.find((user) => user.id === userId);
+    return user ? user.username : 'Unassigned';
   }
 
   onSubmit(incidentForm: any): void {
@@ -46,12 +68,6 @@ export class CreateIncidentComponent implements OnInit {
       .catch((error) => {
         console.error('Error creating incident:', error);
       });
-  }
-
-  loadIncidents(): void {
-    this.incidentService.getAllIncidents().subscribe((incidents) => {
-      this.incidents = incidents;
-    });
   }
 
   onIncidentClick(incidentId: string): void {

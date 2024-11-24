@@ -52,7 +52,8 @@ export class AssignIncidentComponent implements OnInit {
     this.userService.getUsers().subscribe((users) => {
       console.log('Fetched users:', users);
       if (users && users.length > 0) {
-        this.users = users;
+        // this.users = users;
+        this.users = users.filter((user) => !user.isAdmin);
       } else {
         console.error('No users available.');
       }

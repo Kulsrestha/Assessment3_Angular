@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const adminRoutes = ['/admin-dashboard', '/create-incident', '/assign-incident'];
+    const adminRoutes = ['/admin-dashboard', '/create-incident'];
     const userRoutes = ['/user-dashboard'];
 
     const isAdminRoute = adminRoutes.some((path) => state.url.startsWith(path));
